@@ -1,0 +1,76 @@
+####################################### MesRonSH v(1.0) #############################################################3
+
+How to start:
+a)Download MesRonSH .
+b)copy shellrc file to HOME DIRECTORY and rename to .shellrc
+c)create .shellconf file in home directory and keep all user define environment variables
+d)compile shell.cpp using g++ compiler
+e)Run executable file created.
+
+Functionalities :
+
+1)INternal commands
+	command                   options                  arguments            Description
+a)	cd			  nil                      nil                  go to home directory
+        cd                        -                        nil                  go to previous directory
+        cd                        ~                        nil                  go to home director
+	cd                        nil                      directory(PATH)      go to that directory
+	cd                        $                        environment variable cd directory if environment variable is valid path
+b)      pwd                       nil                      nil                  prints current directory
+c)      export                    nil                      argumets(a=b)        sets environment variable a to b
+d)      history                                                                 displays history
+e)      flush                                                                   flushes history
+f)      !                                                  pattern              search for pattern in history and execute latest command matches
+g)      &                                                  command              execute command(process) in background and prints its ID
+h)      fg                                                 ID                   bring process with ID to foreground
+i)      exit                                                                    exit MesRonSH
+j)      $                                                  ENV Variable         USE env variable eith any external internal commands including echo
+k)      echo                      $                        ENV variable         to print value of ENV variable
+
+
+2)EXTERNAL commands:
+Supports all EXTERNAL commands like (ls,vim,g++) stored in bin or path. with all possible arguments
+all commands support ~(HOME DIRECTORY) and $(ENVIRONMENT VARIABLE)
+
+3) PIPES 
+supports multiple PIPES(|).
+
+4) REDIRECTION
+*NOTE REDIRECTION only works with space seperation(" ")
+a) <  for input redirection 
+b)<<  for input on fly(i.e) heredoc..... 
+c) >  for output redirection(CREATE FILE if not exist)
+d)>>  for output redirection in append mode(CREATE FILE if not exist)
+
+5)Constraints:
+a)**Provide Space with REDIRECTIONS
+b)after using fg and bringing process to foreground prompt is lost and there is no way to send process back to backgrouns.You have to wait for process to over.
+c) works on linux environment only
+
+6)Submission contains
+a)shell.cpp (source code) to compile
+b)shellrc(SHELL ENVIRONMENT)
+	note: rename to .shellrc and copy to your home directory
+c)shellconf(ENVIRONMENT VARIABLES)
+for user defined environment variables
+only an example to how to use it.
+change DOWNLOADS and DESKTOP variables to your system path and try cd $DOWNLOADS or ls $DESKTOP .
+	note : change accordingly and rename to .shellconf and copy to your home directory
+d) README
+
+7)other details
+a) history command create .shellhistory file in home directory do not delete it
+b) heredoc create .shell_heredoc temporarily
+
+8) Sorry for warnings while compiling and lengthy and not well modularized course :)
+
+
+PLEASE REPORT BUF IF ANY
+
+
+Sandeep Sharma (MesRon)  
+
+thanks to all OS TA's
+
+
+
