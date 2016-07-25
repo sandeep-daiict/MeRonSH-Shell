@@ -33,6 +33,7 @@ int background=0;
 char* echo_env;
 int MAX_SIZE=10; //Maximum size of command set in .shell conf file
 
+string get_working_path();//Function to get current directory
 
 
 //-----------------------------------------------------------------------------------------------------
@@ -50,9 +51,18 @@ int main()
 	num=0;
 	char *temp_dir;
 	string cur_dir;
-	char* prev_dir;
+	
+    /*
+     char cwd[1024];
+     if (getcwd(cwd, sizeof(cwd)) != NULL)
+     fprintf(stdout, "Current working dir: %s\n", cwd);
+     else
+     perror("getcwd() error");
+    */
 	temp_dir=(char*)malloc(sizeof(char*)*MAX_SIZE);
-	prev_dir=get_current_dir_name();
+	//prev_dir=get_current_dir_name();
+    char prev_dir[1024];
+    getcwd(prev_dir, sizeof(prev_dir));
 	int status=0,check=0;
 	pid_t pid_clear=fork();
 	char* HOME=(char*)malloc(1);
@@ -80,7 +90,10 @@ int main()
 		}
 		echo_env=(char*)malloc(sizeof(char)*20);
 		size_t size=MAX_SIZE;
-		cur_dir=get_current_dir_name(); //Fetching current dirctory after every command
+		cur_dir=get_working_path();
+        
+        
+        //Fetching current dirctory after every command
 		dir=get_dir(cur_dir);
 		char** env_var=(char**)malloc(1);
 		char* command = (char*)malloc(sizeof(char)*MAX_SIZE);
@@ -146,7 +159,8 @@ int main()
 			
 			if(strcmp(token,"-")!=0)        
 			{
-				prev_dir=get_current_dir_name();
+//				prev_dir=get_current_dir_name(); //portable method
+                getcwd(prev_dir, sizeof(prev_dir));
 							
 			}
 			
@@ -158,8 +172,8 @@ int main()
 			}
 			if(strcmp(token,"-")==0)
 			{	strcpy(temp_dir,prev_dir);
-				prev_dir=get_current_dir_name();
-				
+//				prev_dir=get_current_dir_name();
+				getcwd(prev_dir, sizeof(prev_dir));
 				change_dir(temp_dir);
 				
 				
@@ -264,6 +278,15 @@ void change_dir(char* s) // function to change directory
 		printf("%s Directory not exist\n",s);
 	}
 	
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+string get_working_path()
+{
+    char temp[1024];
+    return ( getcwd(temp, 1024) ? std::string( temp ) : std::string("") );
 }
 
 
